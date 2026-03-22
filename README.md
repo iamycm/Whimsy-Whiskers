@@ -1,7 +1,3 @@
-
----
-
-````md
 # Whimsy Whiskers
 
 A modern e-commerce web application built with React, TypeScript, and Supabase.
