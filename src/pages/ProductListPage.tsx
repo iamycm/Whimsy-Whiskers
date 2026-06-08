@@ -33,10 +33,10 @@ export function ProductListPage({ category, onProductClick, onBackClick }: Produ
         .order('id');
 
       // For categories that have products, filter; otherwise return empty
-      if (['dog-products', 'cat-products'].includes(category)) {
+      if (['dog-products', 'cat-products', 'diy-furniture'].includes(category)) {
         query = query.contains('categories', [category]);
       } else {
-        // diy, other-animals, new-collection, about — no products yet
+        // other-animals, new-collection, about — no products yet
         setProducts([]);
         setLoading(false);
         return;
@@ -55,7 +55,7 @@ export function ProductListPage({ category, onProductClick, onBackClick }: Produ
   const categoryNames: { [key: string]: string } = {
     'dog-products': 'Dog Products',
     'cat-products': 'Cat Products',
-    'diy': 'DIY',
+    'diy-furniture': 'DIY Furniture',
     'other-animals': 'Other Animals',
     'new-collection': 'New Collection',
     'about': 'About Us',

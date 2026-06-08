@@ -47,7 +47,7 @@ export function Header({
             </button>
 
             <button
-              onClick={() => onCategoryClick('diy')}
+              onClick={() => onCategoryClick('diy-furniture')}
               className="text-[#5f5a57] hover:text-[#2f2b29] transition-colors"
             >
               DIY
