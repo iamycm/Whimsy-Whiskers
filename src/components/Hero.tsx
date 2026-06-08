@@ -44,7 +44,7 @@ export function Hero({ onCategoryClick }: HeroProps) {
         }}
       >
         <div className="max-w-7xl mx-auto px-6 pt-28 md:pt-32">
-          <div className="grid md:grid-cols-2 gap-10 items-center min-h-[82vh]">
+          <div className="grid md:grid-cols-[5fr_7fr] gap-10 items-center min-h-[82vh]">
             <div className="space-y-6 pb-8 md:pb-24">
               <p className="text-sm tracking-[0.28em] uppercase text-[#9d8d8b]">
                 Thoughtfully designed for pets
@@ -98,9 +98,9 @@ export function Hero({ onCategoryClick }: HeroProps) {
 
             <div className="relative flex justify-center md:justify-end items-end">
               <img
-                src="/homepage.jpg"
+                src="/homepage.png"
                 alt="Happy pets"
-                className="w-full max-w-[660px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]"
+                className="w-full max-w-[860px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]"
               />
             </div>
           </div>
