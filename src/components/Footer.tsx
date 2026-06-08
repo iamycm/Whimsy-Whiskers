@@ -1,6 +1,36 @@
+import { useState, FormEvent } from 'react';
 import { Facebook, Instagram, Smartphone, CreditCard } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 export function Footer() {
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!email.trim() || !message.trim()) {
+      setStatus('error');
+      setErrorMsg('Please enter your email and message.');
+      return;
+    }
+    setStatus('sending');
+    setErrorMsg('');
+    const { error } = await supabase
+      .from('contact_messages')
+      .insert({ email: email.trim(), message: message.trim() });
+    if (error) {
+      setStatus('error');
+      setErrorMsg('Something went wrong. Please try again.');
+      return;
+    }
+    setStatus('sent');
+    setEmail('');
+    setMessage('');
+    setTimeout(() => setStatus('idle'), 4000);
+  };
+
   return (
     <footer
       className="pt-20 pb-10"
@@ -16,23 +46,43 @@ export function Footer() {
               Get in Touch
             </h3>
 
-            <div className="space-y-5 max-w-[760px]">
+            <form onSubmit={handleSubmit} className="space-y-5 max-w-[760px]">
               <input
                 type="email"
                 placeholder="Your email"
-                className="w-full rounded-2xl px-6 py-5 bg-white/60 border border-[#e7ddd7] text-[#5f5a57] placeholder:text-[#9f9a96] outline-none focus:ring-2 focus:ring-[#d8c9c1]"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={status === 'sending'}
+                required
+                className="w-full rounded-2xl px-6 py-5 bg-white/60 border border-[#e7ddd7] text-[#5f5a57] placeholder:text-[#9f9a96] outline-none focus:ring-2 focus:ring-[#d8c9c1] disabled:opacity-50"
               />
 
               <textarea
                 placeholder="Your message"
                 rows={5}
-                className="w-full rounded-2xl px-6 py-5 bg-white/60 border border-[#e7ddd7] text-[#5f5a57] placeholder:text-[#9f9a96] outline-none resize-none focus:ring-2 focus:ring-[#d8c9c1]"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                disabled={status === 'sending'}
+                required
+                className="w-full rounded-2xl px-6 py-5 bg-white/60 border border-[#e7ddd7] text-[#5f5a57] placeholder:text-[#9f9a96] outline-none resize-none focus:ring-2 focus:ring-[#d8c9c1] disabled:opacity-50"
               />
 
-              <button className="bg-[#2f3743] text-white px-8 py-4 rounded-xl hover:bg-[#252c36] transition-colors text-lg">
-                Send Message
-              </button>
-            </div>
+              <div className="flex items-center gap-4 flex-wrap">
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="bg-[#2f3743] text-white px-8 py-4 rounded-xl hover:bg-[#252c36] transition-colors text-lg disabled:opacity-50"
+                >
+                  {status === 'sending' ? 'Sending…' : 'Send Message'}
+                </button>
+                {status === 'sent' && (
+                  <span className="text-[#2f6b3b] text-base">Thanks! We'll get back to you soon.</span>
+                )}
+                {status === 'error' && (
+                  <span className="text-red-600 text-base">{errorMsg}</span>
+                )}
+              </div>
+            </form>
           </div>
 
           <div className="space-y-10">
