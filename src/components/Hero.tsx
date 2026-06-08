@@ -100,7 +100,7 @@ export function Hero({ onCategoryClick }: HeroProps) {
               <img
                 src="/homepage.png"
                 alt="Happy pets"
-                className="w-full max-w-[860px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)]"
+                className="w-full max-w-[860px] h-auto object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.08)] md:translate-x-12"
               />
             </div>
           </div>
